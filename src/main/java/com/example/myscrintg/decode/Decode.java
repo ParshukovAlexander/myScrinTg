@@ -8,10 +8,8 @@ import java.util.Base64;
 import java.util.logging.Logger;
 @Component
 public class Decode {
-//    private static final Logger logger = LoggerFactory.getLogger(WindowFunction.class);
 
     public String getDecode(String s) {
-
         Base64.Decoder decoder = Base64.getDecoder();
             String res = new String(decoder.decode(s));
         return res;

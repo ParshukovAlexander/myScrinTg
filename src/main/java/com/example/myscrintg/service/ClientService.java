@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 public interface ClientService {
 
-    void saveClient(Update update);
+    void saveClient(Update update,Long adminId);
 
     ClientEntity getClient(Update update);
 

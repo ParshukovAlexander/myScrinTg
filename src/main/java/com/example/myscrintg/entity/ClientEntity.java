@@ -25,6 +25,7 @@ public class ClientEntity {
     @Column(name = "client_id_tg")
     private Long idClientTg;
 
-
-
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

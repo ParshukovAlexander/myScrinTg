@@ -3,6 +3,7 @@ package com.example.myscrintg.service.impl;
 import com.example.myscrintg.entity.ClientEntity;
 import com.example.myscrintg.entity.FolderEntity;
 import com.example.myscrintg.entity.PhotoEntity;
+import com.example.myscrintg.entity.Role;
 import com.example.myscrintg.repository.ClientRepository;
 import com.example.myscrintg.repository.FolderRepository;
 import com.example.myscrintg.repository.PhotoRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -27,12 +29,18 @@ public class ClientServiceImpl implements ClientService {
     
 
     @Override
-    public void saveClient(Update update) {
+    public void saveClient(Update update,Long idAdmin) {
+
 
         if (clientRepository.getClientEntityByIdClientTg(update.getMessage().getFrom().getId())==null) {
             ClientEntity client = new ClientEntity();
             client.setClientName(update.getMessage().getFrom().getUserName());
             client.setIdClientTg(update.getMessage().getFrom().getId());
+            if (Objects.equals(idAdmin, update.getMessage().getFrom().getId())){
+                client.setRole(Role.ADMIN);
+            }else {
+                client.setRole(Role.USER);
+            }
             clientRepository.save(client);
         }
     }
@@ -66,6 +74,8 @@ public class ClientServiceImpl implements ClientService {
             List<PhotoEntity> photoEntitiesByFolder = photoRepository.getPhotoEntitiesByFolder(f);
             photoRepository.deleteAll(photoEntitiesByFolder);
         }
+
+
         folderRepository.deleteAll(folderEntitiesByClient);
         clientRepository.delete(clientEntityByIdClientTg);
 

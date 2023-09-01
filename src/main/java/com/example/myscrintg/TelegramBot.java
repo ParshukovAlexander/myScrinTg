@@ -137,12 +137,11 @@ public class TelegramBot extends TelegramLongPollingBot {
         else if (update.hasCallbackQuery() && status.containsValue("all_directory")){
             showPhotoInDirectory(update);
         }else if (update.getMessage().hasText() && status.containsValue("add_directory")){
-            folder.saveFolder(update);
-            prepareAndSendMessage(chatId, "Каталог создан. Для просмотра всех каталогов перейди по /all_directory" +
-                    " или выбери данный пункт в меню ");
+            String s = folder.saveFolder(update);
+            prepareAndSendMessage(chatId, s);
         }else if (status.containsValue("mydata") && update.getMessage().getText().equals("Удалить все данные ❌")){
             client.deleteClient(update);
-            prepareAndSendMessage(chatId, "Данные удалены");
+            prepareAndSendMessage(chatId, "Данные удалены. Для новой работы с ботом перейди на /start");
         }else if ( status.containsValue("into photo")) {
             settingPhoto(update);
         }else if ( status.containsValue("Change name")) {
@@ -240,7 +239,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         long chatId = update.getMessage().getChatId();
 
         if (messageText.equals("/start")) {
-            client.saveClient(update);
+            client.saveClient(update,config.getAdminId());
             prepareAndSendMessage(chatId, "Здравствуй, "+update.getMessage().getFrom().getFirstName()+"! Добро пожаловать в телеграмм бот с добавлением фотографий. " +
                     "Для создания своей первой директории (каталога или папки) перейди в /add_directory или найди аналогичный пункт в меню");
             status.put(update.getMessage().getChatId(),"start");

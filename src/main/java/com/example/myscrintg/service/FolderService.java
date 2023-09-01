@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface FolderService {
 
-    void saveFolder(Update update);
+    String saveFolder(Update update);
 
     List <FolderEntity> getAllDirectoryForId(ClientEntity client);
 

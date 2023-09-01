@@ -9,7 +9,7 @@ services:
     environment:
       - POSTGRES_DB=tg-bot_db
       - POSTGRES_USER=par
-      - POSTGRES_PASSWORD=par
+      - POSTGRES_PASSWORD=sasha2283536Q
     volumes:
       - db:/var/lib/postgresql/data postgres
     ports:
